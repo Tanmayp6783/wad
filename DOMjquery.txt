@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jQuery DOM Update Example</title>
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+    }
+    #content {
+      background-color: #f0f0f0;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="content">
+    This is the original content.
+  </div>
+
+  <button id="updateBtn">Update Content</button>
+
+  <script>
+    // jQuery DOM update using .html() method
+    $(document).ready(function () {
+      $('#updateBtn').click(function () {
+        $('#content').html('<strong>The content has been updated!</strong>');
+      });
+    });
+  </script>
+
+</body>
+</html>

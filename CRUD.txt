@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple CRUD with jQuery</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, button { margin: 5px; padding: 8px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    .edit-btn, .delete-btn { cursor: pointer; color: blue; }
+  </style>
+</head>
+<body>
+
+<h2>User Management (CRUD)</h2>
+
+<input type="text" id="nameInput" placeholder="Enter user name">
+<button id="addBtn">Add User</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>User Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="userTableBody">
+    <!-- Users will be inserted here -->
+  </tbody>
+</table>
+
+<script>
+  let users = [];
+  let editingIndex = -1;
+
+  function refreshTable() {
+    let rows = '';
+    users.forEach((user, index) => {
+      rows += `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${user}</td>
+          <td>
+            <span class="edit-btn" data-index="${index}">Edit</span> |
+            <span class="delete-btn" data-index="${index}">Delete</span>
+          </td>
+        </tr>
+      `;
+    });
+    $('#userTableBody').html(rows);
+  }
+
+  $('#addBtn').click(function () {
+    const name = $('#nameInput').val().trim();
+
+    if (name === '') {
+      alert("Name cannot be empty!");
+      return;
+    }
+
+    if (editingIndex === -1) {
+      users.push(name); // Create
+    } else {
+      users[editingIndex] = name; // Update
+      editingIndex = -1;
+      $('#addBtn').text('Add User');
+    }
+
+    $('#nameInput').val('');
+    refreshTable();
+  });
+
+  // Read + Update trigger
+  $(document).on('click', '.edit-btn', function () {
+    editingIndex = $(this).data('index');
+    $('#nameInput').val(users[editingIndex]);
+    $('#addBtn').text('Update User');
+  });
+
+  // Delete
+  $(document).on('click', '.delete-btn', function () {
+    const index = $(this).data('index');
+    if (confirm('Are you sure you want to delete this user?')) {
+      users.splice(index, 1);
+      refreshTable();
+    }
+  });
+</script>
+
+</body>
+</html>
